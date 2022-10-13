@@ -128,8 +128,10 @@ class _MycalciState extends State<Mycalci> {
     else if(presbtn=='+' || presbtn=='-' || presbtn=='X' || presbtn=='/' || presbtn=='=' || presbtn=='%'){
         if(first==0)
           first=double.parse(preres);
-        else
-          second=double.parse(preres);
+        else {
+          if(preres!='')
+          second = double.parse(preres);
+        }
         if(operator=='+')
           res=add();
         else if(operator=='-')
@@ -158,26 +160,38 @@ class _MycalciState extends State<Mycalci> {
   String add(){
     res=(first+second).toString();
     first=double.parse(res);
-    return res;
+    operator='';
+    return containdeci(res);
   }
   String sub(){
     res=(first-second).toString();
     first=double.parse(res);
-    return res;
+    operator='';
+    return containdeci(res);
   }
   String mul(){
     res=(first*second).toString();
     first=double.parse(res);
-    return res;
+    operator='';
+    return containdeci(res);
   }
   String div(){
     res=(first/second).toString();
     first=double.parse(res);
-    return res;
+    operator='';
+    return containdeci(res);
   }
   String per(){
     res=(first/100).toString();
-    return res;
+    return containdeci(res);
+  }
+  String containdeci(dynamic result){
+    if(result.toString().contains('.')) {
+      List<String> splitDecimal = result.toString().split('.');
+      if(!(int.parse(splitDecimal[1]) > 0))
+        return result = splitDecimal[0].toString();
+    }
+    return result;
   }
 }
 
