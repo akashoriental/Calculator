@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:rflutter_alert/rflutter_alert.dart';
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -128,6 +128,7 @@ class _MycalciState extends State<Mycalci> {
   res='';
   first=0;
   second=0;
+  count=0;
   }
   else if(presbtn=='+' || presbtn=='-' || presbtn=='X' || presbtn=='/' || presbtn=='=' || presbtn=='%'){
   if(first==0) {
@@ -148,6 +149,9 @@ class _MycalciState extends State<Mycalci> {
   else if(presbtn=='+-'){
   preres=preres.toString().startsWith('-')?preres.toString().substring(1):'-$preres';
   res=preres;
+  }
+  else if(presbtn=='<>'){
+    Alert(context: context,title: 'WARNING',desc: 'Do not use this, it is not for you.').show();
   }
   else{
     if(count==1 || presbtn!='.') {
