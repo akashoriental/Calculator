@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: Mycalci(),
   ));
@@ -21,18 +21,18 @@ class _MycalciState extends State<Mycalci> {
         //To do simething here
         calcute(text);
       },
-      child: Text('$text',
-      style: TextStyle(
-        fontSize: 40,
-        color: txtcol,
-      ),
-      ),
-      style: ElevatedButton.styleFrom(backgroundColor:(btncol),padding: (EdgeInsets.symmetric(horizontal: 30,vertical: 20)),shape:(
+      style: ElevatedButton.styleFrom(backgroundColor:(btncol),padding: (const EdgeInsets.symmetric(horizontal: 30,vertical: 20)),shape:(
           RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50.0),
           )
 
       ),),
+      child: Text(text,
+      style: TextStyle(
+        fontSize: 40,
+        color: txtcol,
+      ),
+      ),
     );
   }
   @override
@@ -40,21 +40,21 @@ class _MycalciState extends State<Mycalci> {
     return Scaffold(
       backgroundColor: Colors.black26,
       appBar: AppBar(
-        title: Text('copyright'),
+        title: const Text('copyright'),
         centerTitle: true,
         backgroundColor: Colors.black12,
       ),
       body: Padding(
-        padding: EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(5.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Padding(padding: EdgeInsets.all(10.0),
+                Padding(padding: const EdgeInsets.all(10.0),
                   child: Text('$result',
-                  style: TextStyle(color: Colors.white,fontSize: 100),
+                  style: const TextStyle(color: Colors.white,fontSize: 100),
                   ),
                 ),
               ],
@@ -68,7 +68,7 @@ class _MycalciState extends State<Mycalci> {
                 drawButton('/', Colors.amber, Colors.white),
               ],
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -78,7 +78,7 @@ class _MycalciState extends State<Mycalci> {
                 drawButton('X', Colors.amber, Colors.white),
               ],
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -88,7 +88,7 @@ class _MycalciState extends State<Mycalci> {
                 drawButton('-', Colors.amber, Colors.white),
               ],
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -98,7 +98,7 @@ class _MycalciState extends State<Mycalci> {
                 drawButton('+', Colors.amber, Colors.white),
               ],
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -108,7 +108,7 @@ class _MycalciState extends State<Mycalci> {
                 drawButton('=', Colors.amber, Colors.white),
               ],
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
           ],
         ),
       ),
@@ -121,8 +121,7 @@ class _MycalciState extends State<Mycalci> {
   dynamic preres='';
   dynamic res='';
   void calcute(String presbtn){
-    if(presbtn=='.')
-      count++;
+    if(presbtn=='.') count++;
   if(presbtn=='AC') {
   result='';
   preres='';
@@ -136,29 +135,29 @@ class _MycalciState extends State<Mycalci> {
     count=0;
   }
   else {
-  if(preres!='')
-  second = double.parse(preres);
+  if(preres!='') second = double.parse(preres);
   }
-  if(operator=='+')
-  res=add();
-  else if(operator=='-')
-  res=sub();
-  else if(operator=='X')
-  res=mul();
-  else if(operator=='/')
-  res=div();
-  else if(operator=='%')
-  res=per();
+  if(operator=='+') res=add();
+  else if(operator=='-') res=sub();
+  else if(operator=='X') res=mul();
+  else if(operator=='/') res=div();
+  else if(operator=='%') res=per();
   operator=presbtn;
   preres='';
   }
   else if(presbtn=='+-'){
-  preres=preres.toString().startsWith('-')?preres.toString().substring(1):'-'+preres.toString();
+  preres=preres.toString().startsWith('-')?preres.toString().substring(1):'-$preres';
   res=preres;
   }
   else{
     if(count==1 || presbtn!='.') {
       preres = preres + presbtn;
+    }
+    else{
+     final snack = SnackBar(
+        content: Text('You pressed the wrong key'),
+      );
+     ScaffoldMessenger.of(context).showSnackBar(snack);
     }
     res=preres;
   }
