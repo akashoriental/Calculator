@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-void main()=> runApp(MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: Mycalci(),
-));
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Mycalci(),
+  ));
+}
 class Mycalci extends StatefulWidget {
   const Mycalci({Key? key}) : super(key: key);
 
@@ -38,7 +40,7 @@ class _MycalciState extends State<Mycalci> {
     return Scaffold(
       backgroundColor: Colors.black26,
       appBar: AppBar(
-        title: Text('copyright to akash garg'),
+        title: Text('copyright'),
         centerTitle: true,
         backgroundColor: Colors.black12,
       ),
@@ -112,86 +114,93 @@ class _MycalciState extends State<Mycalci> {
       ),
     );
   }
+  int count=0;
   dynamic first=0;
   dynamic second=0;
   dynamic operator='';
   dynamic preres='';
   dynamic res='';
   void calcute(String presbtn){
-    if(presbtn=='AC') {
-         result='';
-         preres='';
-         res='';
-         first=0;
-         second=0;
+    if(presbtn=='.')
+      count++;
+  if(presbtn=='AC') {
+  result='';
+  preres='';
+  res='';
+  first=0;
+  second=0;
+  }
+  else if(presbtn=='+' || presbtn=='-' || presbtn=='X' || presbtn=='/' || presbtn=='=' || presbtn=='%'){
+  if(first==0) {
+    first = double.parse(double.parse(preres).toStringAsFixed(2));
+    count=0;
+  }
+  else {
+  if(preres!='')
+  second = double.parse(preres);
+  }
+  if(operator=='+')
+  res=add();
+  else if(operator=='-')
+  res=sub();
+  else if(operator=='X')
+  res=mul();
+  else if(operator=='/')
+  res=div();
+  else if(operator=='%')
+  res=per();
+  operator=presbtn;
+  preres='';
+  }
+  else if(presbtn=='+-'){
+  preres=preres.toString().startsWith('-')?preres.toString().substring(1):'-'+preres.toString();
+  res=preres;
+  }
+  else{
+    if(count==1 || presbtn!='.') {
+      preres = preres + presbtn;
     }
-    else if(presbtn=='+' || presbtn=='-' || presbtn=='X' || presbtn=='/' || presbtn=='=' || presbtn=='%'){
-        if(first==0)
-          first=double.parse(preres);
-        else {
-          if(preres!='')
-          second = double.parse(preres);
-        }
-        if(operator=='+')
-          res=add();
-        else if(operator=='-')
-          res=sub();
-        else if(operator=='X')
-          res=mul();
-        else if(operator=='/')
-          res=div();
-        else if(operator=='%')
-          res=per();
-        operator=presbtn;
-        preres='';
-    }
-    else if(presbtn=='+-'){
-      preres=preres.toString().startsWith('-')?preres.toString().substring(1):'-'+preres.toString();
-      res=preres;
-    }
-    else{
-      preres=preres+presbtn;
-      res=preres;
-    }
-    setState(() {
-      result=res;
-    });
+    res=preres;
+  }
+  setState(() {
+  result=res;
+  });
   }
   String add(){
-    res=(first+second).toString();
-    first=double.parse(res);
-    operator='';
-    return containdeci(res);
+  res=(first+second).toString();
+  first=double.parse(double.parse(res).toStringAsFixed(2));
+  operator='';
+  return containdeci(res);
   }
   String sub(){
-    res=(first-second).toString();
-    first=double.parse(res);
-    operator='';
-    return containdeci(res);
+  res=(first-second).toString();
+  first=double.parse(double.parse(res).toStringAsFixed(2));
+  operator='';
+  return containdeci(res);
   }
   String mul(){
-    res=(first*second).toString();
-    first=double.parse(res);
-    operator='';
-    return containdeci(res);
+  res=(first*second).toString();
+  first= double.parse(double.parse(res).toStringAsFixed(2));
+  operator='';
+  return containdeci(res);
   }
   String div(){
-    res=(first/second).toString();
-    first=double.parse(res);
-    operator='';
-    return containdeci(res);
+  res=(first/second).toString();
+  first=double.parse(double.parse(res).toStringAsFixed(2));
+  operator='';
+  return containdeci(res);
   }
   String per(){
-    res=(first/100).toString();
-    return containdeci(res);
+  res=((first*100)/second).toString();
+  return containdeci(res);
   }
   String containdeci(dynamic result){
-    if(result.toString().contains('.')) {
-      List<String> splitDecimal = result.toString().split('.');
-      if(!(int.parse(splitDecimal[1]) > 0))
-        return result = splitDecimal[0].toString();
-    }
-    return result;
+  if(result.toString().contains('.')) {
+  List<String> splitDecimal = result.toString().split('.');
+  if(!(int.parse(splitDecimal[1]) > 0))
+  return result = splitDecimal[0].toString();
+  }
+  return result;
   }
 }
 
