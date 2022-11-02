@@ -15,6 +15,33 @@ class Mycalci extends StatefulWidget {
 
 class _MycalciState extends State<Mycalci> {
   dynamic result='0';
+  Future<void> showAlert() async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+      return AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Limit Reached'),
+                Text('You cannot add more keys as this will go beyond app limitation'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+      );
+        },
+    );
+  }
   Widget drawButton(String text, Color btncol , Color txtcol){
     return ElevatedButton(
       onPressed: (){
@@ -151,9 +178,13 @@ class _MycalciState extends State<Mycalci> {
   res=preres;
   }
   else if(presbtn=='<>'){
-    Alert(context: context,title: 'WARNING',desc: 'Do not use this, it is not for you.').show();
+    Alert(context: context,title: 'WARNING',desc: 'Do not use this, DEVELOPER ONLY').show();
+
   }
   else{
+    if(preres.toString().length>=5){
+      showAlert();
+    }
     if(count==1 || presbtn!='.') {
       preres = preres + presbtn;
     }
@@ -171,24 +202,40 @@ class _MycalciState extends State<Mycalci> {
   }
   String add(){
   res=(first+second).toString();
+  if(res.length>=6) {
+    Alert(context: context,title: 'WARNING',desc: 'The result has gone beyond user expectation').show();
+    res='';
+  }
   first=double.parse(double.parse(res).toStringAsFixed(2));
   operator='';
   return containdeci(res);
   }
   String sub(){
   res=(first-second).toString();
+  if(res.length>=6) {
+    Alert(context: context,title: 'WARNING',desc: 'The result has gone beyond user expectation').show();
+    res='';
+  }
   first=double.parse(double.parse(res).toStringAsFixed(2));
   operator='';
   return containdeci(res);
   }
   String mul(){
   res=(first*second).toString();
+  if(res.length>=6) {
+    Alert(context: context,title: 'WARNING',desc: 'The result has gone beyond user expectation').show();
+    res='';
+  }
   first= double.parse(double.parse(res).toStringAsFixed(2));
   operator='';
   return containdeci(res);
   }
   String div(){
   res=(first/second).toString();
+  if(res.length>=6) {
+    Alert(context: context,title: 'WARNING',desc: 'The result has gone beyond user expectation').show();
+    res='';
+  }
   first=double.parse(double.parse(res).toStringAsFixed(2));
   operator='';
   return containdeci(res);
