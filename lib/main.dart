@@ -157,15 +157,18 @@ class _MycalciState extends State<Mycalci> {
       } else {
         if (preres != '') second = double.parse(preres);
       }
-      if (operator == '+')
-        res = add();
-      else if (operator == '-')
-        res = sub();
-      else if (operator == 'X')
-        res = mul();
-      else if (operator == '/')
-        res = div();
-      else if (operator == '%') res = per();
+      if(first!=0 && second!=0) {
+        if (operator == '+')
+          res = add();
+        else if (operator == '-')
+          res = sub();
+        else if (operator == 'X')
+          res = mul();
+        else if (operator == '/')
+          res = div();
+        else if (operator == '%')
+          res = per();
+      }
       operator = presbtn;
       preres = '';
     } else if (presbtn == '+-') {
@@ -173,8 +176,12 @@ class _MycalciState extends State<Mycalci> {
       res = preres;
     } else if (presbtn == '<') {
       setState(() {
-        preres = preres.substring(0, preres.length - 1);
-        res = preres;
+        String dot=res.toString().substring(res.toString().length-1);
+        if(dot=='.')
+          count=0;
+        res = res.toString().substring(0,res.toString().length-1);
+        preres=res;
+        first = double.parse(double.parse(preres).toStringAsFixed(2));
       });
     } else {
       if (count == 1 || presbtn != '.') {
@@ -226,6 +233,7 @@ class _MycalciState extends State<Mycalci> {
 
   String per() {
     res = ((first * 100) / second).toString();
+    operator = '';
     return containdeci(res);
   }
 
