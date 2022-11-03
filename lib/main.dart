@@ -15,33 +15,6 @@ class Mycalci extends StatefulWidget {
 
 class _MycalciState extends State<Mycalci> {
   dynamic result='0';
-  Future<void> showAlert() async {
-    return showDialog<void>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-      return AlertDialog(
-          title: const Text('AlertDialog Title'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Limit Reached'),
-                Text('You cannot add more keys as this will go beyond app limitation'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Approve'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-      );
-        },
-    );
-  }
   Widget drawButton(String text, Color btncol , Color txtcol){
     return ElevatedButton(
       onPressed: (){
@@ -73,70 +46,72 @@ class _MycalciState extends State<Mycalci> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(5.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(padding: const EdgeInsets.all(10.0),
-                  child: Text('$result',
-                  style: const TextStyle(color: Colors.white,fontSize: 100),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(padding: const EdgeInsets.all(10.0),
+                    child: Text('$result',
+                    style: const TextStyle(color: Colors.white,fontSize: 100),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                drawButton('AC', Colors.grey, Colors.black),
-                drawButton('+-', Colors.grey, Colors.black),
-                drawButton('%', Colors.grey, Colors.black),
-                drawButton('/', Colors.amber, Colors.white),
-              ],
-            ),
-            const SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                drawButton('7', Colors.grey, Colors.black),
-                drawButton('8', Colors.grey, Colors.black),
-                drawButton('9', Colors.grey, Colors.black),
-                drawButton('X', Colors.amber, Colors.white),
-              ],
-            ),
-            const SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                drawButton('4', Colors.grey, Colors.black),
-                drawButton('5', Colors.grey, Colors.black),
-                drawButton('6', Colors.grey, Colors.black),
-                drawButton('-', Colors.amber, Colors.white),
-              ],
-            ),
-            const SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                drawButton('1', Colors.grey, Colors.black),
-                drawButton('2', Colors.grey, Colors.black),
-                drawButton('3', Colors.grey, Colors.black),
-                drawButton('+', Colors.amber, Colors.white),
-              ],
-            ),
-            const SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                drawButton('<>', Colors.grey, Colors.black),
-                drawButton('0', Colors.grey, Colors.black),
-                drawButton('.', Colors.grey, Colors.black),
-                drawButton('=', Colors.amber, Colors.white),
-              ],
-            ),
-            const SizedBox(height: 10,),
-          ],
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  drawButton('AC', Colors.grey, Colors.black),
+                  drawButton('+-', Colors.grey, Colors.black),
+                  drawButton('%', Colors.grey, Colors.black),
+                  drawButton('/', Colors.amber, Colors.white),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  drawButton('7', Colors.grey, Colors.black),
+                  drawButton('8', Colors.grey, Colors.black),
+                  drawButton('9', Colors.grey, Colors.black),
+                  drawButton('X', Colors.amber, Colors.white),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  drawButton('4', Colors.grey, Colors.black),
+                  drawButton('5', Colors.grey, Colors.black),
+                  drawButton('6', Colors.grey, Colors.black),
+                  drawButton('-', Colors.amber, Colors.white),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  drawButton('1', Colors.grey, Colors.black),
+                  drawButton('2', Colors.grey, Colors.black),
+                  drawButton('3', Colors.grey, Colors.black),
+                  drawButton('+', Colors.amber, Colors.white),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  drawButton('<', Colors.grey, Colors.black),
+                  drawButton('0', Colors.grey, Colors.black),
+                  drawButton('.', Colors.grey, Colors.black),
+                  drawButton('=', Colors.amber, Colors.white),
+                ],
+              ),
+              const SizedBox(height: 10,),
+            ],
+          ),
         ),
       ),
     );
@@ -145,7 +120,7 @@ class _MycalciState extends State<Mycalci> {
   dynamic first=0;
   dynamic second=0;
   dynamic operator='';
-  dynamic preres='';
+  String preres='';
   dynamic res='';
   void calcute(String presbtn){
     if(presbtn=='.') count++;
@@ -177,14 +152,14 @@ class _MycalciState extends State<Mycalci> {
   preres=preres.toString().startsWith('-')?preres.toString().substring(1):'-$preres';
   res=preres;
   }
-  else if(presbtn=='<>'){
-    Alert(context: context,title: 'WARNING',desc: 'Do not use this, DEVELOPER ONLY').show();
+  else if(presbtn=='<'){
+    setState(() {
+      preres = preres.substring(0,preres.length-1);
+      res=preres;
+    });
 
   }
   else{
-    if(preres.toString().length>=5){
-      showAlert();
-    }
     if(count==1 || presbtn!='.') {
       preres = preres + presbtn;
     }
@@ -212,30 +187,18 @@ class _MycalciState extends State<Mycalci> {
   }
   String sub(){
   res=(first-second).toString();
-  if(res.length>=6) {
-    Alert(context: context,title: 'WARNING',desc: 'The result has gone beyond user expectation').show();
-    res='';
-  }
   first=double.parse(double.parse(res).toStringAsFixed(2));
   operator='';
   return containdeci(res);
   }
   String mul(){
   res=(first*second).toString();
-  if(res.length>=6) {
-    Alert(context: context,title: 'WARNING',desc: 'The result has gone beyond user expectation').show();
-    res='';
-  }
   first= double.parse(double.parse(res).toStringAsFixed(2));
   operator='';
   return containdeci(res);
   }
   String div(){
   res=(first/second).toString();
-  if(res.length>=6) {
-    Alert(context: context,title: 'WARNING',desc: 'The result has gone beyond user expectation').show();
-    res='';
-  }
   first=double.parse(double.parse(res).toStringAsFixed(2));
   operator='';
   return containdeci(res);
