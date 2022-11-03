@@ -17,7 +17,7 @@ class Mycalci extends StatefulWidget {
 
 class _MycalciState extends State<Mycalci> {
   dynamic result = '0';
-  Widget drawButton(String text, Color btncol, Color txtcol) {
+  Widget drawButton(String text, Color btncol, Color txtcol,[IconData? ic]) {
     return ElevatedButton(
       onPressed: () {
         //To do simething here
@@ -73,8 +73,11 @@ class _MycalciState extends State<Mycalci> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 drawButton('AC', Colors.grey, Colors.black),
+                SizedBox(width: 5,),
                 drawButton('+-', Colors.grey, Colors.black),
+                SizedBox(width: 5,),
                 drawButton('%', Colors.grey, Colors.black),
+                SizedBox(width: 5,),
                 drawButton('/', Colors.amber, Colors.white),
               ],
             ),
@@ -120,7 +123,7 @@ class _MycalciState extends State<Mycalci> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                drawButton('<', Colors.grey, Colors.black),
+                drawButton('', Colors.grey, Colors.black,Icons.backspace_rounded),
                 drawButton('0', Colors.grey, Colors.black),
                 drawButton('.', Colors.grey, Colors.black),
                 drawButton('=', Colors.amber, Colors.white),
@@ -156,6 +159,7 @@ class _MycalciState extends State<Mycalci> {
         count = 0;
       } else {
         if (preres != '') second = double.parse(preres);
+        count=0;
       }
       if(first!=0 && second!=0) {
         if (operator == '+')
@@ -240,7 +244,10 @@ class _MycalciState extends State<Mycalci> {
   String containdeci(dynamic result) {
     if (result.toString().contains('.')) {
       List<String> splitDecimal = result.toString().split('.');
+      print(splitDecimal[0]);
+      print(splitDecimal[1]);
       if (!(int.parse(splitDecimal[1]) > 0)) return result = splitDecimal[0].toString();
+      result=double.parse(result).toStringAsFixed(2);
     }
     return result;
   }
