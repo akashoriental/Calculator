@@ -16,6 +16,7 @@ class Mycalci extends StatefulWidget {
 }
 
 class _MycalciState extends State<Mycalci> {
+  double? size;
   dynamic result = '0';
   Widget drawButton(String text, Color btncol, Color txtcol,[IconData? ic]) {
     return ElevatedButton(
@@ -33,7 +34,7 @@ class _MycalciState extends State<Mycalci> {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 40,
+          fontSize: (size!<400) ? 15:40,
           color: txtcol,
         ),
       ),
@@ -42,6 +43,7 @@ class _MycalciState extends State<Mycalci> {
 
   @override
   Widget build(BuildContext context) {
+    size=MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black26,
       appBar: AppBar(
