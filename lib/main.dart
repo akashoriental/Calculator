@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
-void main() {
+import 'package:calculator/preferences.dart';
+void main(){
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: Mycalci(),
@@ -16,8 +16,19 @@ class Mycalci extends StatefulWidget {
 }
 
 class _MycalciState extends State<Mycalci> {
-  double? size;
-  dynamic result = '0';
+  dynamic result='0';
+  @override
+  void initState(){
+    super.initState();
+    // TODO: implement initState
+    Future.delayed(Duration.zero,()async
+    {
+      await UserPreferences.init();
+      result = await UserPreferences.getval();
+    });
+  }
+  double? width;
+  double? height;
   Widget drawButton(String text, Color btncol, Color txtcol,[IconData? ic]) {
     return ElevatedButton(
       onPressed: () {
@@ -26,24 +37,27 @@ class _MycalciState extends State<Mycalci> {
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: (btncol),
-        padding: (const EdgeInsets.symmetric(horizontal: 30, vertical: 20)),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
         shape: (RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50.0),
         )),
       ),
-      child: Text(
+      child: (text!='<')?Text(
         text,
         style: TextStyle(
-          fontSize: (size!<400) ? 15:40,
+          fontSize: 40,
           color: txtcol,
         ),
-      ),
+      ):Icon(ic,size: 40,),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    size=MediaQuery.of(context).size.width;
+    width=MediaQuery.of(context).size.width;
+    height=MediaQuery.of(context).size.height;
+    print(width);
+    print(height);
     return Scaffold(
       backgroundColor: Colors.black26,
       appBar: AppBar(
@@ -125,7 +139,7 @@ class _MycalciState extends State<Mycalci> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                drawButton('', Colors.grey, Colors.black,Icons.backspace_rounded),
+                drawButton('<', Colors.grey, Colors.black,Icons.backspace_rounded),
                 drawButton('0', Colors.grey, Colors.black),
                 drawButton('.', Colors.grey, Colors.black),
                 drawButton('=', Colors.amber, Colors.white),
@@ -187,6 +201,7 @@ class _MycalciState extends State<Mycalci> {
           count=0;
         res = res.toString().substring(0,res.toString().length-1);
         preres=res;
+        if(preres!='')
         first = double.parse(double.parse(preres).toStringAsFixed(2));
       });
     } else {
@@ -200,8 +215,11 @@ class _MycalciState extends State<Mycalci> {
       }
       res = preres;
     }
-    setState(() {
+    setState((){
       result = res;
+      Future.delayed(Duration.zero,()async{
+      await UserPreferences.setval(result);
+      });
     });
   }
 
