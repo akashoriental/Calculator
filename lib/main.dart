@@ -35,11 +35,17 @@ class _MycalciState extends State<Mycalci> {
         //To do simething here
         calcute(text);
       },
-      style: ElevatedButton.styleFrom(
+      style: (width!<400)?ElevatedButton.styleFrom(
         backgroundColor: (btncol),
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         shape: (RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50.0),
+          borderRadius: BorderRadius.circular(60.0),
+        )),
+      ):ElevatedButton.styleFrom(
+        backgroundColor: (btncol),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+        shape: (RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(60.0),
         )),
       ),
       child: (text!='<')?Text(
@@ -48,7 +54,7 @@ class _MycalciState extends State<Mycalci> {
           fontSize: 40,
           color: txtcol,
         ),
-      ):Icon(ic,size: 40,),
+      ):Icon(ic,size: 40,color: Colors.black,),
     );
   }
 
@@ -89,11 +95,8 @@ class _MycalciState extends State<Mycalci> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 drawButton('AC', Colors.grey, Colors.black),
-                SizedBox(width: 5,),
                 drawButton('+-', Colors.grey, Colors.black),
-                SizedBox(width: 5,),
                 drawButton('%', Colors.grey, Colors.black),
-                SizedBox(width: 5,),
                 drawButton('/', Colors.amber, Colors.white),
               ],
             ),
