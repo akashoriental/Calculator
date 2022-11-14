@@ -43,9 +43,9 @@ class _MycalciState extends State<Mycalci> {
         )),
       ):ElevatedButton.styleFrom(
         backgroundColor: (btncol),
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         shape: (RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(60.0),
+          borderRadius: BorderRadius.circular(50.0),
         )),
       ),
       child: (text!='<')?Text(
