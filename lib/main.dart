@@ -162,7 +162,7 @@ class _MycalciState extends State<Mycalci> {
   dynamic second = 0;
   dynamic operator = '';
   String preres = '';
-  //yfy
+  //y
   dynamic res = '';
   void calcute(String presbtn) {
     if (presbtn == '.') count++;
